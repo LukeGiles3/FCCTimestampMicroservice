@@ -1,3 +1,5 @@
+const functions = require("firebase-functions");
+
 const express = require("express");
 const app = express();
 const port = 3000;
@@ -34,7 +36,7 @@ app.get("/api/1451001600000", function (req, res) {
   res.json({ unix: 1451001600000, utc: "Fri, 25 Dec 2015 00:00:00 GMT" });
 });
 
-app.get("/api/:date?", function (req, res) {
+app.get("/app/api/:date?", function (req, res) {
   if (req.params.date === undefined) {
     let newDate = new Date()
     let utcTime = newDate.toUTCString()
@@ -48,3 +50,5 @@ app.get("/api/:date?", function (req, res) {
     res.json({ unix: newUnix, utc: newDate });
   }
 });
+
+exports.app = functions.https.onRequest(app);
